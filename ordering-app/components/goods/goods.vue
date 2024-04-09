@@ -160,10 +160,7 @@
 				default: 0
 			}
 		},
-<<<<<<< HEAD
- 
-		//进入组件就会出发，避免组件重复渲染
-=======
+
 		mounted() {
 			this.goodsTop = 0; //菜品详情scroll-view距离顶部的top
 			this.goodsHeight = 0;
@@ -177,34 +174,6 @@
 				this.goodsInfo = this.goodsItems
 			}
 			this.isGoodsPosition = true //控制菜品区域定位只在页面加载时执行一次，过后不再执行
-		},
->>>>>>> c33a89b (点餐)
-		activated() {
-			this.goodsTop = 0; //菜品详情scroll-view距离顶部的top
-			this.goodsHeight = 0;
-			this.goodsLeft = 0; //菜品详情scroll-view距离顶部的left
-			this.goodsJson = {} //获取到的菜品的gid作为key，将其相对应的位置top作为value 存储到json对象中用和搜索页面传来的gid相匹配从而拿到定位
-			// watch监听如果访问同一家店铺失效问题
-			if (this.shopGoods && this.shopGoods.length > 0) {
-				this.classifyItems = this.shopGoods
-<<<<<<< HEAD
-			}else{
-				this.classifyItems=[]
-			}
- 			if (this.goodsItems && this.goodsItems.length > 0) {
-				this.goodsInfo = this.goodsItems
-			}else{
-				this.goodsInfo=[]
-			}
-			this.isGoodsPosition = true //控制菜品区域定位只在页面加载时执行一次，过后不再执行
-			
-=======
-			}
-			if (this.goodsItems && this.goodsItems.length > 0) {
-				this.goodsInfo = this.goodsItems
-			}
-			this.isGoodsPosition = true //控制菜品区域定位只在页面加载时执行一次，过后不再执行
->>>>>>> c33a89b (点餐)
 		},
 		methods: {
 			...mapMutations({
@@ -306,19 +275,11 @@
 							// console.log(this.classifyItems[i])
 							//将非可视区域的标题改为静态定位从而达只显示当先可视区域标题
 							for (let goodsKey in this.goodsInfo) {
-<<<<<<< HEAD
-									// console.log(this.goodsInfo[goodsKey])
-=======
->>>>>>> c33a89b (点餐)
 								//如果定位存在固定定位修改为静态定位
 								if (this.goodsInfo[goodsKey].position === "fixed") {
 									this.goodsInfo[goodsKey].position = "static"
 									this.goodsInfo[goodsKey].top = 0
 									this.goodsInfo[goodsKey].left = 0
-<<<<<<< HEAD
-								
-=======
->>>>>>> c33a89b (点餐)
 									//改变vuex中的goodsItems数据的定位,解决点击加号后固定标题头丢死，定位卡顿问题
 									this.SET_GOODS_POSITION({
 										index: goodsKey,
@@ -329,10 +290,6 @@
 									break
 								}
 							}
-<<<<<<< HEAD
-							console.log(this.goodsInfo[i])
-=======
->>>>>>> c33a89b (点餐)
 							//菜品区域上方菜品分类固定定位随之更替
 							this.goodsInfo[i].position = "fixed"
 							this.goodsInfo[i].left = this.goodsLeft

@@ -46,11 +46,7 @@
 		<goods :show="goodsAction" :branchShopId="branchShopId" :goodsId="goodsId" :shopGoods="shopGoods"
 			:goodsItems="goodsItems" :goodsAmount="goodsAmount" @showGoodsDetails="showGoodsDetails"
 			@incAmount="incAmount" @decAmount="setCartGoodsAmount" @setGoodsAmountInput="setAmountInput"></goods>
-<<<<<<< HEAD
- 		<!-- 商家组件 -->
-=======
-		<!-- 商家组件 -->
->>>>>>> c33a89b (点餐)
+
 		<business :show="businessAction" :branchShopId="branchShopId"></business>
 		<!--只有在菜品展示组件显示的情况下，才显示购物车导航-->
 		<view class="cart-main" v-show="goodsAction" @click="CartShow()">
@@ -66,11 +62,7 @@
 			</view>
 			<view class="line"></view>
 			<view class="submit" @click.stop="submitPayInfo()">
-<<<<<<< HEAD
-				<template v-if="goodsAmount>0">提交订单 &gt;</template>
-=======
 				<template v-if="amountCount>0">提交订单 &gt;</template>
->>>>>>> c33a89b (点餐)
 				<template v-else>未选购商品</template>
 			</view>
 		</view>
