@@ -1,0 +1,81 @@
+
+.page.data-v-4586967a {
+		width: 100%;
+		min-height: 100vh;
+		overflow: hidden;
+		background-color: #FFFFFF;
+}
+.other-login-text.data-v-4586967a {
+		width: 100%;
+		height: 100rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+}
+.other-login-text .line.data-v-4586967a {
+		width: 30%;
+		height: 1px;
+		background-color: #CCCCCC;
+}
+.other-login-text .text.data-v-4586967a {
+		font-size: 28rpx;
+		color: #333333
+}
+.other-login.data-v-4586967a {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+}
+.user-info.data-v-4586967a {
+		width: 100%;
+		height: 500rpx;
+		padding: 0 20rpx;
+		box-sizing: border-box;
+}
+.user-info .user-header.data-v-4586967a {
+		width: 100%;
+		height: 100rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1rpx solid #CCCCCC;
+}
+.user-info .user-header .button.data-v-4586967a{
+		width: 130rpx;
+		height: 80rpx;
+		text-align: center;
+}
+.user-info .user-header .button .img.data-v-4586967a {
+		width: 100%;
+		height: 80rpx;
+		background-position: initial;
+ 		background-repeat: no-repeat;
+}
+.user-info .user-header .text.data-v-4586967a {
+		width: 60%;
+		height: 80rpx;
+		text-align: right;
+		padding: 0 30rpx;
+}
+.weui-input.data-v-4586967a {
+		width: 80%;
+		height: 80rpx;
+		margin: 0 auto;
+		border-radius: 5rpx;
+		font-size: 32rpx;
+		text-align: center;
+		line-height: 80rpx;
+		top: 20rpx;
+}
+.other-login .wx-login.data-v-4586967a {
+		width: 80%;
+		height: 80rpx;
+		background-color: #21B319;
+		margin: 0 auto;
+		border-radius: 5px;
+		color: #FFFFFF;
+		font-size: 32rpx;
+		text-align: center;
+		line-height: 80rpx;
+}
+

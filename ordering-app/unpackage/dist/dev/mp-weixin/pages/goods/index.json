@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "点餐",
+  "navigationStyle": "custom",
+  "disableScroll": true,
+  "onReachBottomDistance": 100,
+  "usingComponents": {
+    "goods": "/components/goods/goods",
+    "business": "/components/business/business",
+    "cart": "/components/cart/cart"
+  }
+}

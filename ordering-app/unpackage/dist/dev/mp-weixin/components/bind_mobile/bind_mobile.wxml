@@ -1,0 +1,1 @@
+<view hidden="{{!(show)}}" class="mobile-mask data-v-323f2e4e"><button class="bind-mobile-btn data-v-323f2e4e" open-type="getPhoneNumber" data-event-opts="{{[['getphonenumber',[['getPhoneNumber',['$event']]]]]}}" bindgetphonenumber="__e">绑定手机</button></view>

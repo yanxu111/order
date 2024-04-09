@@ -1,0 +1,80 @@
+{
+	"pages": [{
+			"path": "pages/main/main",
+			"style": {
+				"navigationBarTitleText": "点餐小程序",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+
+		},
+		{
+			"path": "pages/search/index",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"navigationStyle": "custom",
+				"onReachBottomDistance": 100 //页面上拉加载距离底部触发距离
+			}
+		},
+		{
+			"path": "pages/goods/index",
+			"style": {
+				"navigationBarTitleText": "点餐",
+				"navigationStyle": "custom",
+				"disableScroll": true, //禁止整个页面滚动
+				"onReachBottomDistance": 100 //页面上拉加载距离底部触发距离
+			}
+		},
+		{
+			"path": "pages/goods/meal",
+			"style": {
+				"navigationBarTitleText": "套餐详情",
+				"navigationStyle": "default"
+ 			}
+		},
+		{
+			"path": "pages/business/address-map",
+			"style": {
+				"navigationBarTitleText": "商家位置",
+				"navigationStyle": "default"
+			}
+		},
+		{
+			"path": "pages/main/focus",
+			"style": {
+				"navigationBarTitleText": "关注商家公众号",
+				"navigationStyle": "default"
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "微信授权登录",
+				"navigationStyle": "default"
+			}
+		}
+	],
+	//创建配置分包文件，统一管理需要会员登陆的页面
+	"subPackages": [
+		{
+			"root": "user_pages", //根目录
+			"pages": [ //子路由配置页面
+				{
+					"path": "order/index",
+					"style": {
+						"navigationBarTitleText": "订单详情",
+						"navigationStyle": "default"
+					}
+				}
+			]
+		}
+		
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "点餐小程序",
+		"navigationBarBackgroundColor": "#BB0000",
+		"backgroundColor": "#F8F8F8"
+	}
+}
