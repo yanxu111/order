@@ -39,6 +39,7 @@
 						</view>
 					</view>
 				</view>
+
 				<view class="order-row">
 					<view class="order-col-1">
 						<view>是否打包</view>
@@ -98,20 +99,20 @@
 			//根据是否有桌号判断是否允许自提
 			this.isDisablePack = this.table_code ? true : false
 			//提交购物车是否自提
-			this.isPack=false
+			this.isPack = false
 		},
 		methods: {
 			...mapActions({
 				getShopArea: "business/getShopArea", //获取商家点菜区域
 				submitOrder: "order/submitOrder", //提交订单信息获取返回数据进行支付
-				wechatPayOrder:"order/wechatPayOrder"  //微信小程序支付订单接口
+				wechatPayOrder: "order/wechatPayOrder" //微信小程序支付订单接口
 			}),
 			...mapMutations({
 				"SET_TABLE_CODE": "cart/SET_TABLE_CODE" //设置isTableCode是否自提
 			}),
 			// 是否计算打包费
 			chackedPack(e) {
-				this.isPack=e.target.value
+				this.isPack = e.target.value
 				this.SET_TABLE_CODE({
 					isTableCode: e.target.value
 				})
@@ -122,39 +123,87 @@
 					branch_shop_id: this.branch_shop_id,
 					table_code: this.table_code,
 					remarks: this.remarks,
-					is_pack: this.isPack?"1":"0",
+					is_pack: this.isPack ? "1" : "0",
 					distribution_type: this.table_code ? "0" : "2"
 				}
 				this.submitOrder({
 					orderData: orderData,
-					completed: (res) => {
-						if(res.code===200){
+					completed: async (res) => {
+						if (res.code === 200) {
 							// 如果成功判断前后台金额是否相同,相同则跳转支付页面,否则给出提示
-							if(res.data.true_total===this.total){
-								let trueTotal=res.data.true_total
-								let orderNum=res.data.ordernum
+							if (res.data.true_total === this.total) {
+								let trueTotal = res.data.true_total
+								let orderNum = res.data.ordernum
 								// 只有是微信小程序平台的时候才会执行此段程序,调用微信小程序接口
-								 //#ifdef MP-WEIXIN
-								
-								
-								this.wechatPayOrder({
-									notify_url:this.$config.baseApi+"/api/home/wxpay/wechat_notify",  //服务端微信小程序支付回调接口
-									ordernum:orderNum, //订单编号
-									price:trueTotal //金额
+								//#ifdef MP-WEIXIN							
+								let unideOrder = await this.wechatPayOrder({
+									notify_url: this.$config.baseApi +
+										"/api/home/wxpay/wechat_notify", //服务端微信小程序支付回调接口
+									ordernum: orderNum, //订单编号
+									price: trueTotal, //金额
+									// 微信支付平台对接接口									
 								})
+								console.log(unideOrder)
+								if (unideOrder.code === 200) {
+									//支付失败 因为个人appid 没有开通微信支付，但支付六流程如下
+									uni.requestPayment({
+										provider: 'wxpay',
+										timeStamp: String(unideOrder.timeStamp), //时间戳
+										nonceStr: unideOrder.nonceStr, //随机字符串
+										package: unideOrder.package, //接口返回的prepay_id
+										signType: 'MD5',
+										paySign: unideOrder.paySign, //支付签名
+										success: (res) => {
+											// 因appid支付没有开通无法使用,顾在失败回调中写逻辑
+											uni.showToast({
+												title: "支付成功",
+												icon: 'success',
+												duration: 2000,
+												success: () => {
+													setTimeout(() => {
+														uni.navigateTo({
+															url: `/user_pages/order/pay_success?branch_shop_id=${this.branch_shop_id}&table_code=${this.table_code}`
+														})
+													}, 2000)
+												}
+											})
+										},
+										fail: (e) => {
+											uni.showToast({
+												title: "支付成功",
+												icon: 'success',
+												duration: 2000,
+												success: () => {
+													setTimeout(() => {
+														uni.navigateTo({
+															url: `/user_pages/order/pay_success?branch_shop_id=${this.branch_shop_id}&table_code=${this.table_code}`
+														})
+													}, 2000)
+
+												}
+											})
+										}
+									})
+								} else {
+									uni.showToast({
+										title: "请求支付失败",
+										icon: "error",
+										duration: 2000
+									})
+								}
 								//#endif
-							}else{
+							} else {
 								uni.showToast({
-									title:"当前金额存在异议，请重新进入程序点餐",
-									icon:'error',
-									duration:2000
+									title: "当前金额存在异议，请重新进入程序点餐",
+									icon: 'error',
+									duration: 2000
 								})
 							}
-						}else{
+						} else {
 							uni.showToast({
-								title:res.data,
-								icon:'error',
-								duration:2000
+								title: res.data,
+								icon: 'error',
+								duration: 2000
 							})
 						}
 					}
@@ -380,7 +429,7 @@
 	.order-main .remarks {
 		font-size: 28rpx;
 		width: 100%;
-		/* margin-top: 20rpx; */
+		margin-top: 20rpx;
 		box-sizing: border-box;
 		padding: 0px 20rpx;
 		background-color: #ffffff;
@@ -390,7 +439,7 @@
 	.order-main .remarks .content {
 		width: 100%;
 		height: 300rpx;
-		overflow: hidden;
+		/* overflow: hidden; */
 		margin-top: 20rpx;
 		border-radius: 5px;
 		border: 1px solid #EFEFEF;

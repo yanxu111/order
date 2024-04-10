@@ -39,7 +39,7 @@
 					<view class="text">订单</view>
 				</view>
 				<view class="line"></view>
-				<view class="my"></view>
+				<view class="my" @click="pushAge(`/pages/my/index?branch_shop_id=${branchShopId}&table_code=${tableCode}`)"></view>
 			</view>
 		</view>
 		<!-- 菜品组件 -->
@@ -347,6 +347,12 @@
 					})
 				}
 
+			},
+			pushAge(url){
+				console.log(url)
+				uni.navigateTo({
+					url
+				})
 			},
 			// 点击关注按钮跳转web-view公众号页面
 			focusWeixin() {

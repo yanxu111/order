@@ -1,0 +1,37 @@
+
+.page.data-v-64776e8c {
+	width: 100%;
+	min-height: 100vh;
+	background-color: #FFFFFF;
+	overflow: hidden;
+}
+.order-main.data-v-64776e8c {
+	width: 100%;
+}
+.order-main .pay-success.data-v-64776e8c {
+	width: auto;
+	font-size: 32rpx;
+	color: #000000;
+	text-align: center;
+	margin-top: 20rpx;
+	font-weight: bold;
+}
+.order-main .view-order.data-v-64776e8c {
+	width: 200rpx;
+	height: auto;
+	font-size: 28rpx;
+	color: #FFFFFF;
+	border-radius: 5px;
+	background-color: darkred;
+	margin-top: 20rpx;
+}
+.order-main .msg.data-v-64776e8c {
+	font-size: 28rpx;
+	margin-top: 20rpx;
+	margin-left: 20rpx;
+	text-align: center;
+}
+.order-main .msg .official.data-v-64776e8c {
+	color: #E30019;
+}
+

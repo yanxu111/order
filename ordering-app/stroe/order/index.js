@@ -29,7 +29,7 @@ export default {
 				}
 			})
 		},
-		wechatPayOrder(context, payload) {
+		 wechatPayOrder(context, payload) {
 			let data = {
 				uid: context.rootState.login.uid, //用户id
 				token: context.rootState.login.token, //用户验证token
@@ -39,9 +39,8 @@ export default {
 				body: context.rootState.business.shopInfo.branch_shop_name + "订单详情",
 				...payload
 			}
-			console.log(data)
-			wechatPayOrderData(data).then(res => {
-				console.log(res)
+			return wechatPayOrderData(data).then(res => {
+				 return res
 			})
 		}
 	}

@@ -31,28 +31,35 @@
 			"style": {
 				"navigationBarTitleText": "套餐详情",
 				"navigationStyle": "default"
- 			}
+  			}
 		},
 		{
 			"path": "pages/business/address-map",
 			"style": {
 				"navigationBarTitleText": "商家位置",
 				"navigationStyle": "default"
-			}
+ 			}
 		},
 		{
 			"path": "pages/main/focus",
 			"style": {
 				"navigationBarTitleText": "关注商家公众号",
 				"navigationStyle": "default"
-			}
+ 			}
 		},
 		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "微信授权登录",
 				"navigationStyle": "default"
-			}
+ 			}
+		},
+		{
+			"path": "pages/my/index",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationStyle": "default"
+ 			}
 		}
 	],
 	//创建配置分包文件，统一管理需要会员登陆的页面
@@ -65,7 +72,14 @@
 					"style": {
 						"navigationBarTitleText": "订单详情",
 						"navigationStyle": "default"
-					}
+ 					}
+				},
+				{
+					"path": "order/pay_success",
+					"style": {
+						"navigationBarTitleText": "支付成功",
+						"navigationStyle": "default"
+ 					}
 				}
 			]
 		}
@@ -74,7 +88,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "点餐小程序",
-		"navigationBarBackgroundColor": "#BB0000",
+		"navigationBarBackgroundColor": "#880000",
 		"backgroundColor": "#F8F8F8"
 	}
 }
