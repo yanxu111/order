@@ -108,6 +108,7 @@
 								table_code: this.table_code,
 								userinfo: JSON.stringify(userInfo)
 							})
+							
 							if (userInfoData.code === 200) {
 								// 保存成功，获取相关信息保存到本地缓存
 								this.ISLOGIN({
@@ -123,8 +124,8 @@
 										duration: 2000,
 										success: () => {
 											setTimeout(() => {
-												uni.navigateBack({
-													delta: 1
+												uni.redirectTo({
+													url:"/pages/main/main"
 												})
 											}, 2000)
 
@@ -150,6 +151,7 @@
 			},
 			// 获取头像临时路径
 			onChooseAvatar(e) {
+				// console.log(e)
 				this.userheadImageUrl = e.detail.avatarUrl
 			},
 			//获取用户微信昵称

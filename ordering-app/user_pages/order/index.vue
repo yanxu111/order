@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<view class="shop-title">{{branch_shop_name}}</view>
+		<view class="shop-title">{{shopInfo.branch_shop_name}}</view>
 		<view class="order-main">
 			<view class="order-list">
 				<view class="order-info" v-if="table_code">
@@ -89,8 +89,7 @@
 		},
 		onLoad(opts) {
 			// console.log(opts)
-			this.branch_shop_name = opts.branch_shop_name ? opts.branch_shop_name : ""
-			this.branch_shop_id = opts.branch_shop_id ? opts.branch_shop_id : ""
+ 			this.branch_shop_id = opts.branch_shop_id ? opts.branch_shop_id : ""
 			this.table_code = opts.table_code ? opts.table_code : ""
 			this.getShopArea({
 				branch_shop_id: this.branch_shop_id,
@@ -105,7 +104,8 @@
 			...mapActions({
 				getShopArea: "business/getShopArea", //获取商家点菜区域
 				submitOrder: "order/submitOrder", //提交订单信息获取返回数据进行支付
-				wechatPayOrder: "order/wechatPayOrder" //微信小程序支付订单接口
+				wechatPayOrder: "order/wechatPayOrder", //微信小程序支付订单接口
+				getShopInfo:"business/getShopInfo" //获取商家详细信息
 			}),
 			...mapMutations({
 				"SET_TABLE_CODE": "cart/SET_TABLE_CODE" //设置isTableCode是否自提
@@ -214,7 +214,8 @@
 			...mapState({
 				shopArea: state => state.business.shopArea,
 				cartData: state => state.cart.cartData,
-				isTableCode: state => state.cart.isTableCode //判断是否为自提，若是需要一直开启switch开关并计算打包费
+				isTableCode: state => state.cart.isTableCode, //判断是否为自提，若是需要一直开启switch开关并计算打包费
+				shopInfo:state=>state.business.shopInfo //商家详情信息
 			}),
 			...mapGetters({
 				total: "cart/total", //计算总价

@@ -338,7 +338,7 @@
 			submitPayInfo(){
 				if(this.amountCount>0){
 					uni.navigateTo({
-						url:`/user_pages/order/index?branch_shop_id=${this.branchShopId}&table_code=${this.tableCode}&branch_shop_name=${this.shopInfo.branch_shop_name}`
+						url:`/user_pages/order/index?branch_shop_id=${this.branchShopId}&table_code=${this.tableCode}`
 					})
 				}else{
 					uni.showToast({

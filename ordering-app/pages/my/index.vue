@@ -8,39 +8,125 @@
 			<view class="title">我的</view>
 			<view :class="{'user-info':true,ipx:false}">
 				<view class="head">
-					<image src="../../static/images/main/kfc.jpg"></image>
+					<image
+						:src="isLogin?'https://diancan.glbuys.com/userfiles/head/708879407.png':'../../static/images/main/my.png'">
+					</image>
 				</view>
-				<view class="nickname">熬熬熬</view>
+				<view class="nickname">{{isLogin?userInfo.nickname:"昵称"}}</view>
 				<view class="show-total">
-					<view class="text">积分：22</view>
+					<view class="text">积分：{{isLogin?userInfo.points:0}}</view>
 				</view>
 				<view class="show-balance">
-					<view class="text">余额：22</view>
+					<view class="text">余额：{{isLogin?userInfo.balance:0}}</view>
 				</view>
 			</view>
 		</view>
 		<view class="pannel-main">
-			<view class="list">
-				<view class="text">我的订单</view>
+			<view class="list"
+				@click="userPush(`/user_pages/order/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
+				<view class="text">
+					我的订单</view>
 				<view class="arrow"></view>
 			</view>
-			<view class="list">
+			<view class="list"
+				@click="userPush(`/user_pages/order/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
 				<view class="text">个人资料</view>
 				<view class="arrow"></view>
 			</view>
-			<view class="list">
+			<view class="list"
+				@click="userPush(`/user_pages/order/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
 				<view class="text">绑定手机</view>
 				<view class="arrow"></view>
 			</view>
-			<button type="button" class="out-btn">安全退出</button>
+			<button type="button" class="out-btn" @click="outLogin()">{{isLogin?'安全退出':'登录'}}</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		mapActions,
+		mapState,
+		mapMutations
+	} from "vuex"
 	export default {
 		name: "my",
- 
+		data() {
+			return {
+				branch_shop_id: "",
+				table_code: ""
+			}
+		},
+		onLoad(opts) {
+			this.branch_shop_id = opts.branch_shop_id ? opts.branch_shop_id : ""
+			this.table_code = opts.table_code ? opts.table_code : ""
+			this.getUserInfo({
+				branch_shop_id: this.branch_shop_id,
+				table_code: this.table_code
+			})
+		},
+		methods: {
+			...mapActions({
+				getUserInfo: "my/getUserInfo", //获取用户会员信息
+				safaOutLogin: "my/safaOutLogin" //安全退出
+			}),
+			...mapMutations({
+				"OUT_LOGIN": "login/OUT_LOGIN" //退出登录，清空本地缓存用户信息
+			}),
+			//跳转订单页面/个人资料页面/绑定手机号页面
+			userPush(url) {
+				// 如果登录了跳转,否则跳转到登陆页面
+				if (this.isLogin) {
+					uni.navigateTo({
+						url
+					})
+				} else {
+					uni.showToast({
+						title: "请先登录",
+						duration: 2000,
+						icon: "none"
+					})
+				}
+			},
+			// 安全推出/登录
+			outLogin() {
+				if (this.isLogin) {
+					// 如果登陆了:安全退出
+					// 清空本地缓存
+					this.safaOutLogin({
+						success: (res) => {
+							if (res.code === 200) {
+								uni.showToast({
+									title: res.data,
+									icon: "success",
+									duration: 2000,
+									success: () => {
+										this.OUT_LOGIN()
+									}
+								})
+							}else{
+								uni.showToast({
+									title:res.data,
+									icon:"error",
+									duration:2000
+								})
+							}
+						}
+					})
+				} else {
+					// 否则:登录
+					uni.navigateTo({
+						url: `/pages/login/index?branch_shop_id=${this.branch_shop_id}&table_code=${this.table_code}`
+					})
+				}
+			},
+		},
+		computed: {
+			...mapState({
+				userInfo: state => state.my.userInfo, //会员用户信息
+				isLogin: state => state.login.isLogin, //会员是否登录
+			})
+		}
 	}
 </script>
 

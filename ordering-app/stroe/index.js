@@ -7,6 +7,7 @@ import goods from '../stroe/goods/index.js'
 import login from '../stroe/login/index.js'
 import cart from '../stroe/cart/index.js'
 import order from '../stroe/order/index.js'
+import my from '../stroe/my/index.js'
 Vue.use(Vuex)
 
 const store=new Vuex.Store({
@@ -17,7 +18,8 @@ const store=new Vuex.Store({
 		goods,
 		login,
 		cart,
-		order
+		order,
+		my
 	}
 })
 

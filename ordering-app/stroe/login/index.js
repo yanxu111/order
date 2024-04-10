@@ -47,7 +47,7 @@ export default {
 		//微信小程序会员登陆后数据保存到数据库
 		getWechatSaveUserInfo(contxt, payload) {
 			return getWechatSaveUserInfoData(payload).then(res => {
- 				return res
+  				return res
 			})
 		},
 		//获取用户手机号
