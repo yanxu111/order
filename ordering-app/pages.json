@@ -73,7 +73,8 @@
 			"path": "pages/myorder/details",
 			"style": {
 				"navigationBarTitleText": "订单详情",
-				"navigationStyle": "default"
+				"navigationStyle": "default",
+				"enablePullDownRefresh": true  //下拉刷新
  			}
 		}
 	],

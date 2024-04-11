@@ -93,7 +93,7 @@
 			}
 		},
 		onLoad(opts) {
-			this.branchShopId = opts.branch_shop_id ? opts.branch_shop_id : ""
+ 			this.branchShopId = opts.branch_shop_id ? opts.branch_shop_id : ""
 			this.goodsId = opts.gid ? opts.gid : ""
 			this.tableCode = opts.table_code ? opts.table_code : ""
 			// console.log(this.goodsId)

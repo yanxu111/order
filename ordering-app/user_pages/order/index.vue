@@ -129,7 +129,7 @@
 				this.submitOrder({
 					orderData: orderData,
 					completed: async (res) => {
-						if (res.code === 200) {
+ 						if (res.code === 200) {
 							// 如果成功判断前后台金额是否相同,相同则跳转支付页面,否则给出提示
 							if (res.data.true_total === this.total) {
 								let trueTotal = res.data.true_total
@@ -143,8 +143,7 @@
 									price: trueTotal, //金额
 									// 微信支付平台对接接口									
 								})
-								console.log(unideOrder)
-								if (unideOrder.code === 200) {
+ 								if (unideOrder.code === 200) {
 									//支付失败 因为个人appid 没有开通微信支付，但支付六流程如下
 									uni.requestPayment({
 										provider: 'wxpay',

@@ -14,7 +14,7 @@
 						<view class="area">区域：{{item.hotel_area_title}}</view>
 						<view class="table-code">桌号：{{item.table_code}}</view>
 					</view>
-					<view class="remarks">是否打包:{{item.is_pack===1?'是':'否'}}</view>
+					<view class="remarks">是否打包:{{item.is_pack==='1'?'是':'否'}}</view>
 					<view class="remarks">配送方式：自提</view>
 					<view class="pick-code">取餐码：12</view>
 					<view class="remarks">备注：{{item.remark?item.remark:"无"}}</view>
@@ -57,7 +57,9 @@
 				<view class="price-status">
 					<view class="price">实付金额：￥{{item.true_total}}</view>
 					<view class="status">
-						<view class="status-btn" @click="goOrderDetails(`/pages/myorder/details?ordernum=${item.ordernum}&pay_uid=${item.rpu_uid}`)">订单详情</view>
+						<view class="status-btn"
+							@click="goOrderDetails(`/pages/myorder/details?ordernum=${item.ordernum}&pay_uid=${item.rpu_uid}&branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
+							订单详情</view>
 					</view>
 				</view>
 			</view>
@@ -87,11 +89,11 @@
 			this.pageNum = 1 //当前页码
 			this.pageMax = 0 //最大页码数
 			this.myOrder({
-				page:1,
+				page: 1,
 				status: this.status,
 				completed: (res) => {
 					this.pageMax = res.pagenum
- 				}
+				}
 			})
 
 		},
@@ -99,7 +101,7 @@
 		onPullDownRefresh() {
 			this.pageNum = 1
 			this.myOrder({
- 				"page": this.pageNum,
+				"page": this.pageNum,
 				"status": this.status,
 				success: () => {
 					uni.stopPullDownRefresh();
@@ -107,10 +109,10 @@
 			})
 		},
 		// 上拉加载更多数据
-		onReachBottom() {			
+		onReachBottom() {
 			if (this.pageNum < this.pageMax) {
 				this.pageNum++
- 				this.myOrderPage({
+				this.myOrderPage({
 					"page": this.pageNum,
 					"status": this.status
 				})
@@ -119,9 +121,9 @@
 		methods: {
 			...mapActions({
 				myOrder: "order/myOrder", //我的订单详情
-				myOrderPage:"order/myOrderPage" //我的订单详情分页加载数据
+				myOrderPage: "order/myOrderPage" //我的订单详情分页加载数据
 			}),
-			goOrderDetails(url){
+			goOrderDetails(url) {
 				uni.navigateTo({
 					url
 				})

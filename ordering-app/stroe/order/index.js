@@ -64,6 +64,7 @@ export default {
    				...payload
 			}
 			myOrderData(data).then(res=>{
+				// console.log(res)
  				if(res.code===200){
 					context.commit("MY_ORDER",{myOrderInfo:res.data})
 					if(payload.completed){
@@ -98,9 +99,11 @@ export default {
 				...payload
 			}
  			orderItemsData(data).then(res=>{
-			console.log(res.data)
-				if(res.code===200){
+ 				if(res.code===200){
 					context.commit("ORDER_ITEMS",{orderItemsInfo:res.data})
+					if(payload.success){
+						payload.success()
+					}
 				}
 			})
 		}

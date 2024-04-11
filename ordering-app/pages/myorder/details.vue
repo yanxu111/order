@@ -64,13 +64,13 @@
 					</view>
 				</view>
 				<view class="price-status">
-					<view class="price">菜品金额：￥{{orderItemsInfo.total}}</view>
+					<view class="price">菜品金额：￥{{orderItemsInfo.true_total-orderItemsInfo.pack_total}}</view>
 					<view class="price active">包装费：￥{{orderItemsInfo.pack_total}}</view>
 					<view class="price active">实付金额：￥{{orderItemsInfo.true_total}}</view>
 				</view>
 			</view>
 		</view>
-		<view class="again-order">再来一单</view>
+		<view class="again-order" @click="pushGoods()">再来一单</view>
 	</view>
 </template>
 
@@ -82,16 +82,34 @@
 	export default {
 		name: "order-details",
 		onLoad(opts) {
+			this.branch_shop_id=opts.branch_shop_id?opts.branch_shop_id:""
+			this.table_code=opts.table_code?opts.table_code:""
 			this.ordernum = opts.ordernum ? opts.ordernum : "" //订单编号
 			this.pay_uid = opts.pay_uid ? opts.pay_uid : "" //替付款人uid
 			this.orderItems({
 				ordernum: this.ordernum,
 				pay_uid: this.pay_uid
 			})
-		},
+ 		},
 		methods: {
 			...mapActions({
 				orderItems: "order/orderItems" //订单详情
+			}),
+			// 再来一单(跳转到商家商品详情页面)
+			pushGoods(){
+				uni.redirectTo({
+					url:`/pages/goods/index?branch_shop_id=${this.branch_shop_id}&table_code=${this.table_code}`
+				})
+			}
+		},
+		// 下拉刷新
+		onPullDownRefresh() {
+ 			this.orderItems({
+ 				ordernum: this.ordernum,
+ 				pay_uid: this.pay_uid,
+				success: () => {
+ 					uni.stopPullDownRefresh();
+				}
 			})
 		},
 		computed: {

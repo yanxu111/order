@@ -52,7 +52,8 @@ export default {
 		["GET_CART"](state, payload) {
   			// 循环菜品相加显示在购物车中
 			state.cartAmount = 0
-			if (state.cartData.length > 0) {
+			state.cartData=payload.cartData
+ 			if (state.cartData.length > 0) {
 				for (let i = 0; i < state.cartData.length; i++) {
 					state.cartAmount += state.cartData[i].amount
 				}
