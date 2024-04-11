@@ -10,3 +10,12 @@ export function submitOrderData(data){
 export function wechatPayOrderData(data){
 	return request(config.baseApi+"/api/v1/wxpay/wechat_unifiedorder","post",data)
 }
+
+//我的订单
+export function myOrderData(data){
+	return request(config.baseApi+"/api/v1/user/order/show","post",data)
+}
+//订单详情
+export function orderItemsData(data){
+	return request(config.baseApi+"/api/v1/user/order/details","post",data)
+}

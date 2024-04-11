@@ -7,7 +7,9 @@
     "pages/business/address-map",
     "pages/main/focus",
     "pages/login/index",
-    "pages/my/index"
+    "pages/my/index",
+    "pages/myorder/index",
+    "pages/myorder/details"
   ],
   "subPackages": [
     {

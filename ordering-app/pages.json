@@ -60,6 +60,21 @@
 				"navigationBarTitleText": "个人中心",
 				"navigationStyle": "default"
  			}
+		},
+		{
+			"path": "pages/myorder/index",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"navigationStyle": "default",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/myorder/details",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"navigationStyle": "default"
+ 			}
 		}
 	],
 	//创建配置分包文件，统一管理需要会员登陆的页面

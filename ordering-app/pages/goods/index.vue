@@ -34,9 +34,9 @@
 				<view :class="{item:true, active:businessAction}" @click="changeTag(false,true)">商家</view>
 			</view>
 			<view class="tags-handle">
-				<view class="myorder">
+				<view class="myorder" @click="goPageMyOrder()">
 					<view class="myorder-icon"></view>
-					<view class="text">订单</view>
+					<view class="text" >订单</view>
 				</view>
 				<view class="line"></view>
 				<view class="my" @click="pushAge(`/pages/my/index?branch_shop_id=${branchShopId}&table_code=${tableCode}`)"></view>
@@ -347,6 +347,14 @@
 					})
 				}
 
+			},
+			//跳转我的订单页面
+			goPageMyOrder(){
+				this.$token.safeUser(this, this.branchShopId, this.tableCode, () => {
+					uni.navigateTo({
+						url:`/pages/myorder/index?branch_shop_id=${this.branchShopId}&table_code=${this.tableCode}`
+					})
+				})
 			},
 			pushAge(url){
 				console.log(url)

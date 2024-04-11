@@ -50,8 +50,7 @@ export default {
 		},
 		//从数据库中获取当前分店添加购物车的菜品
 		["GET_CART"](state, payload) {
-			state.cartData = payload.cartData
- 			// 循环菜品相加显示在购物车中
+  			// 循环菜品相加显示在购物车中
 			state.cartAmount = 0
 			if (state.cartData.length > 0) {
 				for (let i = 0; i < state.cartData.length; i++) {
@@ -234,7 +233,7 @@ export default {
 					context.commit("GET_CART", {
 						cartData: res.data
 					})
-
+					
 				}
 				if (payload.success) {
 					payload.success()

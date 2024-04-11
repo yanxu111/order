@@ -1,0 +1,24 @@
+
+.tags.data-v-12d9de24 {
+	width: 100%;
+	height: 80rpx;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #EFEFEF;
+	display: flex;
+	position: fixed;
+	z-index: 10;
+	left: 0px;
+	top: 0px;
+}
+.tags .item.data-v-12d9de24 {
+	flex: 1;
+	height: 100%;
+	font-size: 28rpx;
+	color: #333333;
+	text-align: center;
+	line-height: 80rpx;
+}
+.tags .item.active.data-v-12d9de24 {
+	border-bottom: 1px solid #E30019;
+}
+

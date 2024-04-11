@@ -5,7 +5,7 @@
 			<!-- <view class="back">
 				<view class="back-icon" @click="goBack()"></view>
 			</view> -->
-			<view class="title">我的</view>
+			<!-- <view class="title">我的</view> -->
 			<view :class="{'user-info':true,ipx:false}">
 				<view class="head">
 					<image
@@ -23,7 +23,7 @@
 		</view>
 		<view class="pannel-main">
 			<view class="list"
-				@click="userPush(`/user_pages/order/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
+				@click="userPush(`/pages/myorder/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
 				<view class="text">
 					我的订单</view>
 				<view class="arrow"></view>
@@ -102,6 +102,9 @@
 									duration: 2000,
 									success: () => {
 										this.OUT_LOGIN()
+										uni.redirectTo({
+											url:"/pages/main/main"
+										})
 									}
 								})
 							}else{
