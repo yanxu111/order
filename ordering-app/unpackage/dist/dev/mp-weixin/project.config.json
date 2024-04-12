@@ -15,11 +15,10 @@
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    },
-    "condition": false
+    }
   },
   "compileType": "miniprogram",
-  "libVersion": "3.4.1",
+  "libVersion": "3.4.0",
   "appid": "wx92ba4c50d243e3a4",
   "projectname": "ordering-app",
   "condition": {

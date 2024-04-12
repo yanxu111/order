@@ -34,8 +34,9 @@
 								<view class="info-text">￥{{item.price}}</view>
 								<view class="info-text">包装费：￥{{item.pack_price}}</view>
 								<view class="is-meal">是否套餐：{{item.is_meal==='0'?'否':'是'}}</view>
-								<view
-									:class="{'refund-btn':true,success:item.refund_state==='1',fail:item.refund_state==='-2',handle:item.refund_state==='-1'}">
+								<view v-if="orderItemsInfo.status==='0' && item.is_meal==='0'"
+									:class="{'refund-btn':true,success:item.refund_state==='1',fail:item.refund_state==='-2',handle:item.refund_state==='-1'}"
+									@click=showRefundCommponents(item)>
 									{{item.refund_state==='1'?'退款成功':item.refund_state==='-1'?'处理中':item.refund_state==='-2'?'退款失败':'申请退款'}}
 								</view>
 							</view>
@@ -53,7 +54,11 @@
 										<view>x{{item2.price}}</view>
 										<view>￥{{item2.amount}}</view>
 									</view>
-									<view>退款</view>
+									<view v-if="orderItemsInfo.status==='0'"
+										:class="{'refund-btn':true,success:item2.refund_state==='1',fail:item2.refund_state==='-2',handle:item2.refund_state==='-1'}"
+										@click=showRefundCommponents(item2)>
+										{{item2.refund_state==='1'?'退款成功':item2.refund_state==='-1'?'处理中':item2.refund_state==='-2'?'退款失败':'申请退款'}}
+									</view>
 								</view>
 								<view class="pack-price">包装费：￥{{item2.pack_price}}</view>
 								<view class="refund-content" v-if="item2.refund_state==='-2'">
@@ -71,6 +76,7 @@
 			</view>
 		</view>
 		<view class="again-order" @click="pushGoods()">再来一单</view>
+		<refund_order :isRefundCommponents="isRefundCommponents" :refundData="refundData"  @close="isRefundCommponents=false"></refund_order>
 	</view>
 </template>
 
@@ -81,34 +87,84 @@
 	} from 'vuex'
 	export default {
 		name: "order-details",
+		data() {
+			return {
+				isRefundCommponents: false, //退款组件显示与隐藏
+				refundData:[] //子组件接受数据
+			}
+		},
 		onLoad(opts) {
-			this.branch_shop_id=opts.branch_shop_id?opts.branch_shop_id:""
-			this.table_code=opts.table_code?opts.table_code:""
+			this.branch_shop_id = opts.branch_shop_id ? opts.branch_shop_id : ""
+			this.table_code = opts.table_code ? opts.table_code : ""
 			this.ordernum = opts.ordernum ? opts.ordernum : "" //订单编号
 			this.pay_uid = opts.pay_uid ? opts.pay_uid : "" //替付款人uid
 			this.orderItems({
 				ordernum: this.ordernum,
 				pay_uid: this.pay_uid
 			})
- 		},
+		},
 		methods: {
 			...mapActions({
 				orderItems: "order/orderItems" //订单详情
 			}),
 			// 再来一单(跳转到商家商品详情页面)
-			pushGoods(){
+			pushGoods() {
 				uni.redirectTo({
-					url:`/pages/goods/index?branch_shop_id=${this.branch_shop_id}&table_code=${this.table_code}`
+					url: `/pages/goods/index?branch_shop_id=${this.branch_shop_id}&table_code=${this.table_code}`
 				})
+			},
+			//显示隐藏退款组件
+			showRefundCommponents(item) {
+				if(item.is_meal==='0'){
+					this.refundData=[{
+						refund_state:item.refund_state,
+						order_item_id:item.order_item_id,
+						refund_amount:item.amount,
+						title:item.title,
+						is_meal:item.is_meal
+					}]
+				}else{
+					this.refundData=[{
+						refund_state:item.refund_state,
+						order_item_id:item.order_item_id,
+						refund_amount:item.amount,
+						title:item.title,
+						is_meal:'1'
+					}]
+				}
+				
+ 
+				if(item.refund_state==='1'){
+					uni.showToast({
+						title:"当前餐品已完成退款，请勿重新提交",
+						icon:'none'
+					})
+					return
+				}
+				if(item.refund_state==='-1'){
+					uni.showToast({
+						title:"当前退款正在处理中",
+						icon:'none'
+					})
+					return
+				}
+				if(item.refund_state==='-2'){
+					uni.showToast({
+						title:"当前菜品申请退款失败，请查看失败原因",
+						icon:'none'
+					})
+					return
+				}
+  				this.isRefundCommponents = true
 			}
 		},
 		// 下拉刷新
 		onPullDownRefresh() {
- 			this.orderItems({
- 				ordernum: this.ordernum,
- 				pay_uid: this.pay_uid,
+			this.orderItems({
+				ordernum: this.ordernum,
+				pay_uid: this.pay_uid,
 				success: () => {
- 					uni.stopPullDownRefresh();
+					uni.stopPullDownRefresh();
 				}
 			})
 		},
@@ -259,19 +315,18 @@
 		color: #FFFFFF;
 		font-size: 28rpx;
 		color: #f17f1f;
-		border-radius: 4px;
-	}
+ 	}
 
 	.order-main .order-desc .goods-list .goods-info .refund-btn.success {
-		background-color: #007aff;
+		color: #007aff;
 	}
 
 	.order-main .order-desc .goods-list .goods-info .refund-btn.fail {
-		background-color: #E30019;
+		color: #E30019;
 	}
 
 	.order-main .order-desc .goods-list .goods-info .refund-btn.handle {
-		background-color: #CCCCCC;
+		color: #CCCCCC;
 	}
 
 	.order-main .order-desc .meal-items {
@@ -303,20 +358,19 @@
 		padding: 8rpx 15rpx;
 		color: #FFFFFF;
 		font-size: 28rpx;
-		background-color: #f17f1f;
-		border-radius: 4px;
-	}
+		color: #f17f1f;
+ 	}
 
 	.order-main .order-desc .meal-items .item-list .refund-btn.success {
-		background-color: #007aff;
+		color: #007aff;
 	}
 
 	.order-main .order-desc .meal-items .item-list .refund-btn.fail {
-		background-color: #E30019;
+		color: #E30019;
 	}
 
 	.order-main .order-desc .meal-items .item-list .refund-btn.handle {
-		background-color: #CCCCCC
+		color: #CCCCCC
 	}
 
 	.order-main .order-desc .goods-list-main .refund-content {
