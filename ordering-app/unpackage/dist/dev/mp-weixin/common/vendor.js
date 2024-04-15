@@ -1464,7 +1464,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8556,7 +8556,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8577,14 +8577,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8670,7 +8670,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"ordering-app","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -11698,11 +11698,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
 {
   namespaced: true,
   state: {
     myOrderInfo: [], //我的已支付/待支付订单
-    orderItemsInfo: {} //订单详情页面
+    orderItemsInfo: {}, //订单详情页面
+    refundData: [] //退款订单
   },
   mutations: (_mutations = {}, _defineProperty(_mutations,
   "MY_ORDER", function MY_ORDER(state, payload) {
@@ -11740,6 +11742,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       }
 
     }
+  }), _defineProperty(_mutations,
+
+  "REFUND_ORDER", function REFUND_ORDER(state, payload) {
+    state.refundData = payload.refundData;
+  }), _defineProperty(_mutations,
+
+  "REFUND_ORDER_PAGE", function REFUND_ORDER_PAGE(state, payload) {var _state$refundData;
+    (_state$refundData = state.refundData).push.apply(_state$refundData, _toConsumableArray(payload.refundData));
   }), _mutations),
 
   actions: {
@@ -11852,6 +11862,41 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         }
 
       });
+    },
+    // 退款订单
+    refundOrderInfo: function refundOrderInfo(context, payload) {
+      var data = {
+        uid: context.rootState.login.uid, //用户id
+        token: context.rootState.login.token, //用户验证token
+        platform: context.rootState.system.plateform, //用户登录平台 1：微信小程序
+        page: payload.page ? payload.page : 1 };
+
+      (0, _index.refundOrderInfoData)(data).then(function (res) {
+        if (res.code === 200) {
+          context.commit("REFUND_ORDER", {
+            refundData: res.data });
+
+          if (payload.completed) {
+            payload.completed(res.pageinfo);
+          }
+        }
+      });
+    },
+    // 退款订单页面分页数据
+    refundOrderPage: function refundOrderPage(context, payload) {
+      var data = _objectSpread({
+        uid: context.rootState.login.uid, //用户id
+        token: context.rootState.login.token, //用户验证token
+        platform: context.rootState.system.plateform },
+      payload);
+
+      (0, _index.refundOrderInfoData)(data).then(function (res) {
+        if (res.code === 200) {
+          context.commit("REFUND_ORDER_PAGE", {
+            refundData: res.data });
+
+        }
+      });
     } } };exports.default = _default;
 
 /***/ }),
@@ -11863,7 +11908,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.submitOrderData = submitOrderData;exports.wechatPayOrderData = wechatPayOrderData;exports.myOrderData = myOrderData;exports.orderItemsData = orderItemsData;exports.refundOrderData = refundOrderData;var _index = _interopRequireDefault(__webpack_require__(/*! ../../static/js/config/index.js */ 17));
+Object.defineProperty(exports, "__esModule", { value: true });exports.submitOrderData = submitOrderData;exports.wechatPayOrderData = wechatPayOrderData;exports.myOrderData = myOrderData;exports.orderItemsData = orderItemsData;exports.refundOrderData = refundOrderData;exports.refundOrderInfoData = refundOrderInfoData;var _index = _interopRequireDefault(__webpack_require__(/*! ../../static/js/config/index.js */ 17));
 var _request = __webpack_require__(/*! ../../static/js/utils/request.js */ 18);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //提交订单
@@ -11890,6 +11935,11 @@ function refundOrderData(data) {
   return (0, _request.request)(_index.default.baseApi + "/api/v1/user/order/refund", "post", data);
 }
 
+//退款订单
+function refundOrderInfoData(data) {
+  return (0, _request.request)(_index.default.baseApi + "/api/v1/user/order/show_refund", "post", data);
+}
+
 /***/ }),
 /* 29 */
 /*!******************************************************!*\
@@ -11900,6 +11950,7 @@ function refundOrderData(data) {
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = __webpack_require__(/*! ../../api/my/index.js */ 30);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+
 
 
 
@@ -11925,13 +11976,31 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       payload)).
       then(function (res) {
         if (res.code === 200) {
-          console.log(res.data);
-          context.commit("GET_USER", { userInfo: res.data });
+          context.commit("GET_USER", {
+            userInfo: res.data });
+
         }
       });
     },
+    //安全退出
     safaOutLogin: function safaOutLogin(context, payload) {
-      (0, _index.safaOutLoginData)({ uid: context.rootState.login.uid, platform: context.rootState.system.plateform }).then(function (res) {
+      (0, _index.safaOutLoginData)({
+        uid: context.rootState.login.uid,
+        platform: context.rootState.system.plateform }).
+      then(function (res) {
+        if (payload.success) {
+          payload.success(res);
+        }
+      });
+    },
+    //保存修改用户信息
+    saveUserInfo: function saveUserInfo(context, payload) {
+      (0, _index.saveUserInfoData)(_objectSpread({
+        uid: context.rootState.login.uid,
+        token: context.rootState.login.token,
+        platform: context.rootState.system.plateform },
+      payload)).
+      then(function (res) {
         if (payload.success) {
           payload.success(res);
         }
@@ -11947,7 +12016,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getUserInfoData = getUserInfoData;exports.safaOutLoginData = safaOutLoginData;var _index = _interopRequireDefault(__webpack_require__(/*! ../../static/js/config/index.js */ 17));
+Object.defineProperty(exports, "__esModule", { value: true });exports.getUserInfoData = getUserInfoData;exports.safaOutLoginData = safaOutLoginData;exports.saveUserInfoData = saveUserInfoData;var _index = _interopRequireDefault(__webpack_require__(/*! ../../static/js/config/index.js */ 17));
 var _request = __webpack_require__(/*! ../../static/js/utils/request.js */ 18);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // 获取会员用户信息
@@ -11958,6 +12027,10 @@ function getUserInfoData(data) {
 //安全退出
 function safaOutLoginData(data) {
   return (0, _request.request)(_index.default.baseApi + "/api/v1/outlogin", "post", data);
+}
+//保存修改用户信息
+function saveUserInfoData(data) {
+  return (0, _request.request)(_index.default.baseApi + "/api/v1/user/update", "post", data);
 }
 
 /***/ }),

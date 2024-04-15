@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<tags></tags>
+		<tags :branch_shop_id="branch_shop_id" :table_code="table_code" :state="0"></tags>
 		<view class="order-main" v-if="myOrderInfo.length>0">
 			<view class="order-list" v-for="(item,index) in myOrderInfo" :key="index">
 				<view class="order-info">
@@ -16,7 +16,7 @@
 					</view>
 					<view class="remarks">是否打包:{{item.is_pack==='1'?'是':'否'}}</view>
 					<view class="remarks">配送方式：自提</view>
-					<view class="pick-code">取餐码：12</view>
+					<view class="pick-code">取餐码：{{item.pick_code}}</view>
 					<view class="remarks">备注：{{item.remark?item.remark:"无"}}</view>
 				</view>
 				<view class="order-desc" v-for="(item2,index2) in item.order_desc" :key="index2">
@@ -78,7 +78,8 @@
 		data() {
 			return {
 				branch_shop_id: "",
-				table_code: ""
+				table_code: "",
+				status:""
 
 			}
 		},
@@ -86,7 +87,18 @@
 			this.branch_shop_id = opts.branch_shop_id ? opts.branch_shop_id : ""
 			this.table_code = opts.table_code ? opts.table_code : ""
 			this.status = opts.status ? opts.status : 0 //0:待支付 1：已付款 2：已退款
-			this.pageNum = 1 //当前页码
+			// this.pageNum = 1 //当前页码
+			// this.pageMax = 0 //最大页码数
+			// this.myOrder({
+			// 	page: 1,
+			// 	status: this.status,
+			// 	completed: (res) => {
+			// 		this.pageMax = res.pagenum
+			// 	}
+			// })
+		},
+		onShow() {
+ 			this.pageNum = 1 //当前页码
 			this.pageMax = 0 //最大页码数
 			this.myOrder({
 				page: 1,
@@ -95,7 +107,6 @@
 					this.pageMax = res.pagenum
 				}
 			})
-
 		},
 		// 下拉刷新
 		onPullDownRefresh() {
@@ -110,6 +121,7 @@
 		},
 		// 上拉加载更多数据
 		onReachBottom() {
+			console.log(this.pageMax)
 			if (this.pageNum < this.pageMax) {
 				this.pageNum++
 				this.myOrderPage({

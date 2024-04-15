@@ -10,3 +10,7 @@ export function getUserInfoData(data){
 export function safaOutLoginData(data){
 	return request(config.baseApi+"/api/v1/outlogin","post",data)
 }
+//保存修改用户信息
+export function saveUserInfoData(data){
+	return request(config.baseApi+"/api/v1/user/update","post",data)
+}

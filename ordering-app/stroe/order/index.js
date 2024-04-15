@@ -3,14 +3,16 @@ import {
 	wechatPayOrderData,
 	myOrderData,
 	orderItemsData,
-	refundOrderData
+	refundOrderData,
+	refundOrderInfoData
 } from "../../api/order/index.js"
 
 export default {
 	namespaced: true,
 	state: {
 		myOrderInfo: [], //我的已支付/待支付订单
-		orderItemsInfo: {} //订单详情页面
+		orderItemsInfo: {}, //订单详情页面
+		refundData: [] //退款订单
 	},
 	mutations: {
 		["MY_ORDER"](state, payload) {
@@ -26,9 +28,9 @@ export default {
 		//实时更新订单退款状态
 		["REFUND_ORDER_STATE"](state, payload) {
 			//改变vuex中orderItemsInfo订单详情的退款状态
- 			if (state.orderItemsInfo.order_desc.length > 0) {
- 				if (payload.is_meal === '1') {
- 					level1: for (let i = 0; i < state.orderItemsInfo.order_desc.length; i++) {
+			if (state.orderItemsInfo.order_desc.length > 0) {
+				if (payload.is_meal === '1') {
+					level1: for (let i = 0; i < state.orderItemsInfo.order_desc.length; i++) {
 						level2: for (let j = 0; j < state.orderItemsInfo.order_desc[i].omi_data.length; j++) {
 							if (state.orderItemsInfo.order_desc[i].omi_data[j].order_item_id === payload
 								.order_item_id) {
@@ -48,6 +50,14 @@ export default {
 				}
 
 			}
+		},
+		//退款订单
+		["REFUND_ORDER"](state, payload) {
+			state.refundData = payload.refundData
+		},
+		// 退款订单分页
+		["REFUND_ORDER_PAGE"](state, payload) {
+			state.refundData.push(...payload.refundData)
 		}
 	},
 	actions: {
@@ -90,7 +100,7 @@ export default {
 				platform: context.rootState.system.plateform, //用户登录平台 1：微信小程序
 				...payload
 			}
-			myOrderData(data).then(res => {
+ 			myOrderData(data).then(res => {
 				// console.log(res)
 				if (res.code === 200) {
 					context.commit("MY_ORDER", {
@@ -160,6 +170,41 @@ export default {
 				}
 
 			})
-		}
+		},
+		// 退款订单
+		refundOrderInfo(context, payload) {
+			let data = {
+				uid: context.rootState.login.uid, //用户id
+				token: context.rootState.login.token, //用户验证token
+				platform: context.rootState.system.plateform, //用户登录平台 1：微信小程序
+				page: payload.page ? payload.page : 1
+			}
+			refundOrderInfoData(data).then(res => {
+				if (res.code === 200) {
+					context.commit("REFUND_ORDER", {
+						refundData: res.data
+					})
+					if (payload.completed) {
+						payload.completed(res.pageinfo)
+					}
+				}
+			})
+		},
+		// 退款订单页面分页数据
+		refundOrderPage(context, payload) {
+			let data = {
+				uid: context.rootState.login.uid, //用户id
+				token: context.rootState.login.token, //用户验证token
+				platform: context.rootState.system.plateform, //用户登录平台 1：微信小程序
+				...payload
+			}
+			refundOrderInfoData(data).then(res => {
+				if (res.code === 200) {
+					context.commit("REFUND_ORDER_PAGE", {
+						refundData: res.data
+					})
+				}
+			})
+		},
 	}
 }

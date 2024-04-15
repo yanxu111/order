@@ -223,6 +223,8 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumera
   onLoad: function onLoad(opts) {
     this.branch_shop_id = opts.branch_shop_id ? opts.branch_shop_id : "";
     this.table_code = opts.table_code ? opts.table_code : "";
+  },
+  onShow: function onShow() {
     this.getUserInfo({
       branch_shop_id: this.branch_shop_id,
       table_code: this.table_code });

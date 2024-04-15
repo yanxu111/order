@@ -235,14 +235,26 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumera
   data: function data() {
     return {
       branch_shop_id: "",
-      table_code: "" };
+      table_code: "",
+      status: "" };
 
 
   },
-  onLoad: function onLoad(opts) {var _this = this;
+  onLoad: function onLoad(opts) {
     this.branch_shop_id = opts.branch_shop_id ? opts.branch_shop_id : "";
     this.table_code = opts.table_code ? opts.table_code : "";
     this.status = opts.status ? opts.status : 0; //0:待支付 1：已付款 2：已退款
+    // this.pageNum = 1 //当前页码
+    // this.pageMax = 0 //最大页码数
+    // this.myOrder({
+    // 	page: 1,
+    // 	status: this.status,
+    // 	completed: (res) => {
+    // 		this.pageMax = res.pagenum
+    // 	}
+    // })
+  },
+  onShow: function onShow() {var _this = this;
     this.pageNum = 1; //当前页码
     this.pageMax = 0; //最大页码数
     this.myOrder({
@@ -251,7 +263,6 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumera
       completed: function completed(res) {
         _this.pageMax = res.pagenum;
       } });
-
 
   },
   // 下拉刷新
@@ -267,6 +278,7 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumera
   },
   // 上拉加载更多数据
   onReachBottom: function onReachBottom() {
+    console.log(this.pageMax);
     if (this.pageNum < this.pageMax) {
       this.pageNum++;
       this.myOrderPage({

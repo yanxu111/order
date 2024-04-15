@@ -1,13 +1,38 @@
 <template>
 	<view class="tags">
-		<view :class="{item:true, active:true}">已付款</view>
-		<view :class="{item:true, active:false}">退款</view>
+		<view :class="{item:true, active:state==='0'?true:false}"
+			@click="goPage(`/pages/myorder/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}&status=0`)">
+			已付款</view>
+		<view :class="{item:true, active:state==='-2'?true:false}"
+			@click="goPage(`/pages/myorder/refund?branch_shop_id=${branch_shop_id}&table_code=${table_code}&status=-2`)">
+			退款</view>
 	</view>
 </template>
 
 <script>
 	export default {
-		name: "tags"
+		name: "tags",
+		props: {
+			branch_shop_id: {
+				type: String,
+				default: ""
+			},
+			table_code: {
+				type: String,
+				default: ""
+			},
+			state: {
+				type: String,
+				default: ""
+			}
+		},
+		methods:{
+			goPage(url){
+				uni.redirectTo({
+					url
+				})
+			}
+		}
 	}
 </script>
 
@@ -51,5 +76,6 @@
 
 	.tags .item.active {
 		border-bottom: 1px solid #E30019;
+		background-color: #EFEFEF;
 	}
 </style>

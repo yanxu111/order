@@ -20,5 +20,6 @@
 }
 .tags .item.active.data-v-12d9de24 {
 	border-bottom: 1px solid #E30019;
+	background-color: #EFEFEF;
 }
 

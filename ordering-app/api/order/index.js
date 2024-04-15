@@ -24,3 +24,8 @@ export function orderItemsData(data){
 export function refundOrderData(data){
 	return request(config.baseApi+"/api/v1/user/order/refund","post",data)
 }
+
+//退款订单
+export function refundOrderInfoData(data){
+	return request(config.baseApi+"/api/v1/user/order/show_refund","post",data)
+}

@@ -9,6 +9,7 @@
     "pages/login/index",
     "pages/my/index",
     "pages/myorder/index",
+    "pages/myorder/refund",
     "pages/myorder/details"
   ],
   "subPackages": [
@@ -16,7 +17,9 @@
       "root": "user_pages",
       "pages": [
         "order/index",
-        "order/pay_success"
+        "order/pay_success",
+        "profile/index",
+        "bind_cellphone/index"
       ]
     }
   ],

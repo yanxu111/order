@@ -9,7 +9,7 @@
 			<view :class="{'user-info':true,ipx:false}">
 				<view class="head">
 					<image
-						:src="isLogin?'https://diancan.glbuys.com/userfiles/head/708879407.png':'../../static/images/main/my.png'">
+						:src="isLogin?userInfo.head:'../../static/images/main/my.png'">
 					</image>
 				</view>
 				<view class="nickname">{{isLogin?userInfo.nickname:"昵称"}}</view>
@@ -29,12 +29,12 @@
 				<view class="arrow"></view>
 			</view>
 			<view class="list"
-				@click="userPush(`/user_pages/order/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
+				@click="userPush(`/user_pages/profile/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
 				<view class="text">个人资料</view>
 				<view class="arrow"></view>
 			</view>
 			<view class="list"
-				@click="userPush(`/user_pages/order/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
+				@click="userPush(`/user_pages/bind_cellphone/index?branch_shop_id=${branch_shop_id}&table_code=${table_code}`)">
 				<view class="text">绑定手机</view>
 				<view class="arrow"></view>
 			</view>
@@ -60,7 +60,9 @@
 		onLoad(opts) {
 			this.branch_shop_id = opts.branch_shop_id ? opts.branch_shop_id : ""
 			this.table_code = opts.table_code ? opts.table_code : ""
-			this.getUserInfo({
+		},
+		onShow() {
+ 			this.getUserInfo({
 				branch_shop_id: this.branch_shop_id,
 				table_code: this.table_code
 			})
