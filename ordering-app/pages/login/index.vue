@@ -89,8 +89,8 @@
 							// console.log(loginRes)
 							let openData = await this.getwechatOpenId({
 								code: loginRes.code,
-								appid: "wx92ba4c50d243e3a4",
-								secret: "4bdbc9ba2cd272f7b546ca1b8c7d652f"
+								appid: "wx962cfb365198760f",
+								secret: "6f00d68114150b3db7e09d531fe44b4d"
 							})
 							this.sessionKey = openData.data.session_key
 							// 获取用户信息

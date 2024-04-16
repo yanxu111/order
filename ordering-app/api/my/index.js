@@ -14,3 +14,18 @@ export function safaOutLoginData(data){
 export function saveUserInfoData(data){
 	return request(config.baseApi+"/api/v1/user/update","post",data)
 }
+
+//检测手机号是否存在
+export function userCellphoneData(data){
+ 	return request(config.baseApi+"/api/v1/exist_cellphone","post",data)
+}
+//获取验证码
+
+export function getMsgCodeData(data){
+	return request(config.baseApi+"/api/v1/vcode/send_code","post",data)
+}
+
+//重新绑定手机号
+export function resetUserCellphoneData(data){
+	return request(config.baseApi+"/api/v1/user/wechat_bind_mobile","post",data)
+}

@@ -62,10 +62,12 @@
 	text-align: center;
 	line-height: 80rpx;
 	font-size: 28rpx;
-	color: #717376;
+	color: darkred
 }
 .input-wrap .msg-code-btn.active.data-v-1c464d8e {
-	color: darkred
+	color: #717376;
+	/* //view禁止点击事件 */
+	pointer-events: none;
 }
 .input-wrap .msg-code-btn image.data-v-1c464d8e {
 	width: 80%;

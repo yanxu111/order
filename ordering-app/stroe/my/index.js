@@ -1,7 +1,10 @@
 import {
 	getUserInfoData,
 	safaOutLoginData,
-	saveUserInfoData
+	saveUserInfoData,
+	userCellphoneData,
+	getMsgCodeData,
+	resetUserCellphoneData
 } from "../../api/my/index.js"
 
 export default {
@@ -50,9 +53,34 @@ export default {
 				platform: context.rootState.system.plateform,
 				...payload
 			}).then(res => {
-				 if(payload.success){
-					 payload.success(res)
-				 }
+				if (payload.success) {
+					payload.success(res)
+				}
+			})
+		},
+		//检测手机号是否存在
+		userCellphone(context, payload) {
+			return userCellphoneData(payload).then(res => {
+				return res
+			})
+		},
+		// 发送验证码
+		getMsgCode(context, payload) {
+			return getMsgCodeData(payload).then(res => {
+				return res
+			})
+		},
+		//重新绑定手机号
+		resetUserCellphone(context, payload) {
+			resetUserCellphoneData({
+				uid: context.rootState.login.uid,
+				token: context.rootState.login.token,
+				platform: context.rootState.system.plateform,
+				...payload
+			}).then(res => {
+				if (payload.completed) {
+					payload.completed(res)
+				}
 			})
 		}
 	}

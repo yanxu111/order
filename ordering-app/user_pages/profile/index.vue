@@ -97,7 +97,7 @@
 			},
 			//保存用户信息
 			submitUserInfo() {
-				if (isSubmit) {
+				if (this.isSubmit) {
 					this.isSubmit = false
 					if (this.proName === "" || this.nickname === "" || this.userGender === "" || this.saveImage === "") {
 						uni.showToast({

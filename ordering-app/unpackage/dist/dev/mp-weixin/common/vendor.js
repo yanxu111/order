@@ -11955,6 +11955,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
 {
   namespaced: true,
   state: {
@@ -12005,6 +12008,31 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           payload.success(res);
         }
       });
+    },
+    //检测手机号是否存在
+    userCellphone: function userCellphone(context, payload) {
+      return (0, _index.userCellphoneData)(payload).then(function (res) {
+        return res;
+      });
+    },
+    // 发送验证码
+    getMsgCode: function getMsgCode(context, payload) {
+      return (0, _index.getMsgCodeData)(payload).then(function (res) {
+        return res;
+      });
+    },
+    //重新绑定手机号
+    resetUserCellphone: function resetUserCellphone(context, payload) {
+      (0, _index.resetUserCellphoneData)(_objectSpread({
+        uid: context.rootState.login.uid,
+        token: context.rootState.login.token,
+        platform: context.rootState.system.plateform },
+      payload)).
+      then(function (res) {
+        if (payload.completed) {
+          payload.completed(res);
+        }
+      });
     } } };exports.default = _default;
 
 /***/ }),
@@ -12016,7 +12044,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getUserInfoData = getUserInfoData;exports.safaOutLoginData = safaOutLoginData;exports.saveUserInfoData = saveUserInfoData;var _index = _interopRequireDefault(__webpack_require__(/*! ../../static/js/config/index.js */ 17));
+Object.defineProperty(exports, "__esModule", { value: true });exports.getUserInfoData = getUserInfoData;exports.safaOutLoginData = safaOutLoginData;exports.saveUserInfoData = saveUserInfoData;exports.userCellphoneData = userCellphoneData;exports.getMsgCodeData = getMsgCodeData;exports.resetUserCellphoneData = resetUserCellphoneData;var _index = _interopRequireDefault(__webpack_require__(/*! ../../static/js/config/index.js */ 17));
 var _request = __webpack_require__(/*! ../../static/js/utils/request.js */ 18);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 // 获取会员用户信息
@@ -12031,6 +12059,21 @@ function safaOutLoginData(data) {
 //保存修改用户信息
 function saveUserInfoData(data) {
   return (0, _request.request)(_index.default.baseApi + "/api/v1/user/update", "post", data);
+}
+
+//检测手机号是否存在
+function userCellphoneData(data) {
+  return (0, _request.request)(_index.default.baseApi + "/api/v1/exist_cellphone", "post", data);
+}
+//获取验证码
+
+function getMsgCodeData(data) {
+  return (0, _request.request)(_index.default.baseApi + "/api/v1/vcode/send_code", "post", data);
+}
+
+//重新绑定手机号
+function resetUserCellphoneData(data) {
+  return (0, _request.request)(_index.default.baseApi + "/api/v1/user/wechat_bind_mobile", "post", data);
 }
 
 /***/ }),

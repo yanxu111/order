@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "点餐小程序",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 100,
+  "usingComponents": {
+    "search": "/components/search/search"
+  }
+}

@@ -50,8 +50,8 @@
 						duration: 3000,
 						success: () => {
 							setTimeout(() => {
-								uni.navigateBack({
-									delta: 1
+								uni.redirectTo({
+									url:'/pages/main/main'
 								})
 							}, 3000)
 

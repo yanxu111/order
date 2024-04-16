@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "订单详情",
+  "navigationStyle": "default",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "refund_order": "/components/refund_order/refund_order"
+  }
+}

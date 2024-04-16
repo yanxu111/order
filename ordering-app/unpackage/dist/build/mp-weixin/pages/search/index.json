@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "搜索",
+  "navigationStyle": "custom",
+  "onReachBottomDistance": 100,
+  "usingComponents": {
+    "search": "/components/search/search"
+  }
+}
