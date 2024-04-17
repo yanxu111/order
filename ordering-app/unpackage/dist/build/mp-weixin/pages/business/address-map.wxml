@@ -1,1 +1,0 @@
-<view class="page data-v-6b26858f"><map class="map data-v-6b26858f" latitude="{{lat}}" longitude="{{lng}}" markers="{{markers}}"></map></view>

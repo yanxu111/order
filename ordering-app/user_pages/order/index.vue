@@ -63,7 +63,7 @@
 		<view class="pay-wrap">
 			<view class="price-color">￥{{total}}</view>
 			<view class="price"></view>
-			<view class="pay-color" @click="gopay()">去支付</view>
+			<view class="pay-color" @click="gopay()">结算</view>
 			<cover-view class="pay"></cover-view>
 
 		</view>
@@ -503,12 +503,12 @@
 		width: 150rpx;
 		height: 90rpx;
 		background-color: #f17f1f;
-		text-align: right;
+		text-align: center;
 		line-height: 90rpx;
 		font-size: 35rpx;
 		color: #FFFFFF;
 		position: fixed;
-		z-index: 10;
+		z-index: 99;
 		right: 7%;
 		bottom: 0rpx;
 	}
@@ -517,10 +517,10 @@
 		width: 90rpx;
 		height: 90rpx;
 		background-color: #f17f1f;
-		color: #FFFFFF;
+		/* color: #FFFFFF; */
 		position: fixed;
-		z-index: 3;
+		z-index: -99;
 		right: 0%;
-		border-radius: 0 50% 50% 0;
+		border-radius: 100%;
 	}
 </style>

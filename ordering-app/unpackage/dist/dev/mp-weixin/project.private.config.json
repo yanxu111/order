@@ -8,6 +8,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "user_pages/order/index",
+          "pathName": "user_pages/order/index",
+          "query": "branch_shop_id=802115824&table_code=",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "我的订单",
           "pathName": "pages/myorder/index",
           "query": "branch_shop_id=333071944&table_code=",

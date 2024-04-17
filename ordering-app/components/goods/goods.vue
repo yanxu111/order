@@ -18,7 +18,7 @@
 						<view class="goods-classify-wrap">
 							<!-- //获取item中在vuex里初始化用于监听固定定位title的样式 -->
 							<view class="classify-name"
-								:style="{left:item.left+'px',top:item.top+'px',position:item.position,zIndex:10}">
+								:style="{left:item.left+'px',top:item.top+'px',position:item.position,zIndex:99}">
 								{{item.title}}
 							</view>
 							<view class="goods-list-wrap">
@@ -216,7 +216,7 @@
 								goodsWrapTop = goodsData[i].top - this
 									.goodsTop //用每一个菜品距离顶部的距离减去scrool-view距离顶部的距离从而得到相对应scrool-view的菜品距离从0开始
 								// console.log(goodsData[i])
-								this.classifyItems[i].goodsTop = goodsWrapTop //将每一个菜品区域的top赋值给菜品分类
+								this.classifyItems[i].goodsTop = goodsWrapTop-15 //将每一个菜品区域的top赋值给菜品分类
 								this.classifyItems[i].goodsHeight = goodsData[i].height //菜品区域上方固定分类样式高度
 								// this.classifyItems[i].top = goodsData[i].top //菜品区域上方固定分类样式top
 							}
@@ -293,12 +293,12 @@
 							//菜品区域上方菜品分类固定定位随之更替
 							this.goodsInfo[i].position = "fixed"
 							this.goodsInfo[i].left = this.goodsLeft
-							this.goodsInfo[i].top = this.goodsTop - 10
+							this.goodsInfo[i].top = this.goodsTop
 							//改变vuex中的goodsItems数据的定位
 							this.SET_GOODS_POSITION({
 								index: i,
 								position: "fixed",
-								top: this.goodsTop - 10,
+								top: this.goodsTop,
 								left: this.goodsLeft
 							})
 						}

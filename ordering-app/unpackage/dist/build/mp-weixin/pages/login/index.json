@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "微信授权登录",
-  "navigationStyle": "default",
-  "usingComponents": {
-    "bind_mobile": "/components/bind_mobile/bind_mobile"
-  }
-}

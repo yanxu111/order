@@ -231,7 +231,7 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function ownKeys(object, enumera
     },
     //保存用户信息
     submitUserInfo: function submitUserInfo() {var _this3 = this;
-      if (isSubmit) {
+      if (this.isSubmit) {
         this.isSubmit = false;
         if (this.proName === "" || this.nickname === "" || this.userGender === "" || this.saveImage === "") {
           uni.showToast({

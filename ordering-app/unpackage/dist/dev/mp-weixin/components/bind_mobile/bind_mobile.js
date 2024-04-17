@@ -166,8 +166,8 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function _interopRequireDefault(
                     duration: 3000,
                     success: function success() {
                       setTimeout(function () {
-                        uni.navigateBack({
-                          delta: 1 });
+                        uni.redirectTo({
+                          url: '/pages/main/main' });
 
                       }, 3000);
 
